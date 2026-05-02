@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centaurea Management | Cyprus Real Estate</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1a2533;
+      --gold: #d4af7e;
+      --cream: #f9f6f0;
+      --charcoal: #0f1621;
+      --slate: #334155;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      line-height: 1.82;
+    }
+    h1, h2 { font-family: 'EB Garamond', serif; }
+    .tagline { font-family: 'Cormorant Garamond', serif; }
+
+    header { text-align: center; padding: 80px 20px 50px; }
+    .logo-container { max-width: 380px; margin: 0 auto 45px; }
+    .logo-img { width: 100%; height: auto; display: block; }
+
+    .hero { text-align: center; padding: 20px 20px 100px; max-width: 760px; margin: 0 auto; }
+    .description {
+      font-size: 1.29rem;
+      max-width: 680px;
+      margin: 0 auto;
+      color: #2c3747;
+      padding: 0 15px;
+      line-height: 1.75;
+    }
+
+    .contact-section {
+      background: var(--navy);
+      color: white;
+      padding: 110px 20px 100px;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-size: clamp(2.6rem, 6vw, 3.5rem);
+      margin-bottom: 28px;
+    }
+
+    form { max-width: 620px; margin: 50px auto 0; padding: 0 20px; }
+    .form-group { margin-bottom: 28px; }
+    input, textarea {
+      width: 100%;
+      padding: 19px 26px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      font-size: 1.12rem;
+      background: white;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212, 175, 126, 0.12);
+    }
+
+    button {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 21px 68px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.4s;
+      width: 100%;
+      max-width: 320px;
+    }
+    button:hover { background: #e0c090; transform: translateY(-5px); }
+
+    footer {
+      background: var(--charcoal);
+      color: #94a3b8;
+      text-align: center;
+      padding: 70px 20px 45px;
+    }
+    .gold { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="https://via.placeholder.com/380x380/1a2533/d4af7e?text=Centaurea+Logo" 
+           alt="Centaurea Management" class="logo-img">
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="description">
+      With deep expertise rooted in Cyprus, Centaurea Management provides 
+      discreet and exceptional real estate stewardship, luxury property services, 
+      and strategic investment management.
+    </p>
+  </section>
+
+  <section class="contact-section">
+    <h2>Begin a Conversation</h2>
+    <p style="max-width:540px; margin:0 auto 48px; font-size:1.23rem; opacity:0.94;">
+      Our team is ready to provide discreet, professional guidance tailored to your needs.
+    </p>
+
+    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-group"><input type="text" name="name" placeholder="Your Name" required></div>
+      <div class="form-group"><input type="email" name="email" placeholder="Email Address" required></div>
+      <div class="form-group"><input type="tel" name="phone" placeholder="Phone Number"></div>
+      <div class="form-group"><textarea name="message" rows="5" placeholder="How may we assist you?" required></textarea></div>
+      <button type="submit">Send Message</button>
+      <div id="formMessage"></div>
+    </form>
+  </section>
+
+  <footer>
+    <p><strong>Centaurea Management</strong></p>
+    <p>Global Investments • Cyprus</p>
+    <p>Email: <a href="mailto:info@centaureamanagement.com" class="gold">info@centaureamanagement.com</a></p>
+    <p style="margin-top: 38px; font-size: 0.95rem;">© 2026 Centaurea Management. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const submitBtn = form.querySelector('button');
+    const messageDiv = document.getElementById('formMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          messageDiv.innerHTML = `<div class="success-message" style="background:#d1fae5;color:#065f46;padding:15px;border-radius:12px;margin-top:20px;">Thank you! Your message has been sent successfully.</div>`;
+          form.reset();
+        } else throw new Error();
+      } catch (err) {
+        messageDiv.innerHTML = `<div class="error-message" style="background:#fee2e2;color:#b91c1c;padding:15px;border-radius:12px;margin-top:20px;">Sorry, something went wrong. Please try again.</div>`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  </script>
+</body>
+</html>
